@@ -1,0 +1,107 @@
+@import "../../styles/colors.scss";
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.title {
+  position: relative;
+  z-index: 5;
+}
+
+.text {
+  max-width: 480px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form {
+  background-color: $white;
+  padding: 18px 24px;
+  padding-top: 32px;
+  border-radius: 12px;
+  max-width: 100%;
+  width: 640px;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: -16px;
+    right: 36px;
+    width: 42px;
+    height: 42px;
+    background-color: $main_brand;
+    border-radius: 50%;
+  }
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: -12px;
+    right: -10px;
+    width: 64px;
+    height: 64px;
+    background-color: $dark_accent;
+    border-radius: 50%;
+  }
+}
+
+.input {
+  margin-bottom: 16px;
+}
+
+.error {
+  color: $error;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+}
+
+.button {
+  display: block;
+  padding: 12px 32px;
+  border-radius: 4px;
+  background-color: $main_brand;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: $light_shades;
+  font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: $dark_accent;
+    color: $white;
+  }
+}
+
+.link {
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: underline;
+  color: rgba($dark_shades, 0.5);
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $dark_shades;
+  }
+}
