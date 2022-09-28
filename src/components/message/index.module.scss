@@ -1,0 +1,61 @@
+@import "../../styles/colors.scss";
+
+@keyframes show {
+  0% {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+  }
+  90% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  10% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+  }
+}
+
+.message {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background-color: $white;
+  max-width: calc(100vw - 40px);
+  padding: 6px 16px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px 0 rgba($dark_shades, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-weight: 500;
+  animation: show 0.3s ease-in;
+
+  &.error {
+    color: $error;
+  }
+
+  &.closing {
+    animation: close 0.3s ease-in;
+  }
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
