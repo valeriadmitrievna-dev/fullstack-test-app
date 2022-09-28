@@ -1,8 +1,11 @@
 import React from "react";
+import { useAppSelector } from "./redux/hooks";
 import { useRoutes } from "./routes";
 
 function App() {
-  const routes = useRoutes(false);
+  const { auth } = useAppSelector((state) => state.root);
+  const routes = useRoutes(auth);
+  
   return routes;
 }
 
