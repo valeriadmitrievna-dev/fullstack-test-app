@@ -1,9 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  getUserService,
-  signInService,
-  signUpService,
-} from "../services/auth.service";
+import { signInService, signUpService } from "../services/auth.service";
+import { getUserService } from "../services/user.service";
 import { ApiError, SignInBody, SignUpBody } from "../types/services";
 import { User } from "../types/user";
 
