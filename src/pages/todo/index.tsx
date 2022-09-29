@@ -5,6 +5,7 @@ import Page from "../../components/page";
 import Header from "../../components/header";
 import Input from "../../components/input";
 import TaskCreate from "../../components/taskcreate";
+import { ReactComponent as Search } from "../../assets/search.svg";
 
 const Todo = () => {
   return (
@@ -15,10 +16,11 @@ const Todo = () => {
         <div className={s.taskSearch}>
           <Input
             id="search"
-            value="fd"
+            value=""
             onChange={() => {}}
             placeholder="search task"
             className={s.field}
+            icon={<Search />}
           />
         </div>
       </div>

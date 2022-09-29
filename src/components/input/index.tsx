@@ -9,6 +9,7 @@ interface InputProps {
   placeholder?: string;
   label?: string;
   type?: "text" | "password";
+  icon?: React.ReactNode;
   className?: string;
 }
 
@@ -19,6 +20,7 @@ const Input = ({
   placeholder,
   label,
   type = "text",
+  icon,
   className,
 }: InputProps) => {
   const input = classNames(s.input, className);
@@ -29,14 +31,16 @@ const Input = ({
           {label}
         </label>
       )}
-      <input
-        id={id}
-        type={type}
-        className={input}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
+      <div className={input}>
+        {!!icon && <div className={s.icon}>{icon}</div>}
+        <input
+          id={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
+      </div>
     </>
   );
 };
