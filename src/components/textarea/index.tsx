@@ -19,8 +19,9 @@ const TextArea = ({
   label,
   className,
 }: TextAreaProps) => {
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
   const textarea = classNames(s.textarea, className);
-  
+
   return (
     <>
       {label && (

@@ -29,7 +29,7 @@ const Todo = () => {
         </div>
         <div>
           {tasks.map((task) => (
-            <Task data={task} />
+            <Task key={`task-${task.id}`} data={task} />
           ))}
         </div>
       </div>

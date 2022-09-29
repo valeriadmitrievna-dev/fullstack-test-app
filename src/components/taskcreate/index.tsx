@@ -5,20 +5,54 @@ import Input from "../../components/input";
 import TextArea from "../../components/textarea";
 import { ReactComponent as Chevron } from "../../assets/chevron-down.svg";
 import DatePicker from "../../components/datepicker";
+import { isSameDay } from "date-fns";
+import { getStringWithNormalSpaces } from "../../utils/helpers";
 
 const TaskCreate = () => {
   const taskCreateContent = React.useRef<HTMLDivElement>(null);
   const [isTaskCreateOpened, setTaskCreateOpened] =
-    React.useState<boolean>(true);
+    React.useState<boolean>(false);
 
   const toggleTaskCreated = () => {
     setTaskCreateOpened((pre) => !pre);
   };
 
-  const [newTaskDate, setNewTaskDate] = React.useState<Date>();
+  const [newTaskTitle, setNewTaskTitle] = React.useState<string>("");
+  const [newTaskDescription, setNewTaskDescription] =
+    React.useState<string>("");
+  const [newTaskDeadline, setNewTaskDeadline] = React.useState<Date | null>(
+    null
+  );
 
-  const handleSetNewTaskDate = (date: Date) => {
-    setNewTaskDate(date);
+  const handleSetNewTaskTitle = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setNewTaskTitle(event.target.value);
+  };
+  const handleSetNewTaskDescription = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setNewTaskDescription(event.target.value);
+  };
+  const handleSetNewTaskDeadline = (date: Date) => {
+    if (newTaskDeadline && isSameDay(date, newTaskDeadline)) {
+      setNewTaskDeadline(null);
+    } else {
+      setNewTaskDeadline(date);
+    }
+  };
+
+  const handleCreateTask = () => {
+    const normalizedTitle = getStringWithNormalSpaces(newTaskTitle);
+    const normalizedDescription = getStringWithNormalSpaces(newTaskDescription);
+    console.log({
+      title: normalizedTitle,
+      description:
+        normalizedDescription.length
+          ? normalizedDescription
+          : null,
+      deadline: newTaskDeadline,
+    });
   };
 
   const header = classNames(s.header, {
@@ -40,32 +74,34 @@ const TaskCreate = () => {
         className={s.body}
         style={{
           height: isTaskCreateOpened
-            ? taskCreateContent.current?.getBoundingClientRect().height + "px"
+            ? taskCreateContent?.current?.getBoundingClientRect().height + "px"
             : 0,
         }}
       >
         <div ref={taskCreateContent} className={s.content}>
           <Input
             id="newTaskTitle"
-            value=""
-            onChange={() => {}}
+            value={newTaskTitle}
+            onChange={handleSetNewTaskTitle}
             placeholder="new task title"
             className={s.field}
           />
           <TextArea
             id="newTaskDescription"
-            value=""
-            onChange={() => {}}
+            value={newTaskDescription}
+            onChange={handleSetNewTaskDescription}
             placeholder="new task description"
             className={s.field}
           />
           <div className={s.footer}>
             <DatePicker
               opened={isTaskCreateOpened}
-              value={newTaskDate}
-              onChange={handleSetNewTaskDate}
+              value={newTaskDeadline}
+              onChange={handleSetNewTaskDeadline}
             />
-            <button className={s.button}>create</button>
+            <button className={s.button} onClick={handleCreateTask}>
+              create
+            </button>
           </div>
         </div>
       </div>

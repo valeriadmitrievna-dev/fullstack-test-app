@@ -12,3 +12,8 @@ export type SignUpBody = {
   username: string;
   password: string;
 };
+
+export type CreateTaskBody = {
+  title: string;
+  description?: string;
+};

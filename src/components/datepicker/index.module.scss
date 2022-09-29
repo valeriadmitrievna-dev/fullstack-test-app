@@ -24,6 +24,10 @@
 .date {
   font-weight: 500;
   line-height: 18px;
+
+  &.empty {
+    opacity: 0.5;
+  }
 }
 
 .picker {
@@ -100,13 +104,13 @@
         cursor: default;
       }
 
+      &.today {
+        background-color: $main_brand;
+      }
+
       &:not(:disabled):hover,
       &.active {
         background-color: $light_accent;
-      }
-
-      &.today {
-        background-color: $main_brand;
       }
     }
   }

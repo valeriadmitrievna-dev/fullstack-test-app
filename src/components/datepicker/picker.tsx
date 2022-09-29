@@ -25,7 +25,7 @@ interface PickerProps {
     y: number;
   };
   onChange: (date: Date) => void;
-  value?: Date;
+  value: Date | null;
 }
 
 const Picker = ({ opened, value, onChange, position }: PickerProps) => {
