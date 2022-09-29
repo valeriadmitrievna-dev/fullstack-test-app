@@ -1,17 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Task } from "../types/task";
 import { User } from "../types/user";
-import { getUserThunk, signInThunk, signUpThunk } from "./thunks";
+import {
+  getAllTasksThunk,
+  getUserThunk,
+  signInThunk,
+  signUpThunk,
+} from "./thunks";
 
 export type RootState = {
   auth: boolean;
   loading: boolean;
   user?: User;
   error?: string;
+  tasks: Task[];
 };
 
 export const initialState: RootState = {
   auth: !!localStorage.getItem("token"),
   loading: false,
+  tasks: [],
 };
 
 export const rootSlice = createSlice({
@@ -44,6 +52,19 @@ export const rootSlice = createSlice({
       state.user = payload;
     });
     builder.addCase(getUserThunk.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload?.error;
+      state.auth = false;
+      localStorage.removeItem("token");
+    });
+    builder.addCase(getAllTasksThunk.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllTasksThunk.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.tasks = payload;
+    });
+    builder.addCase(getAllTasksThunk.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload?.error;
       state.auth = false;

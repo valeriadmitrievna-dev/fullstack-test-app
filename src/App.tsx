@@ -2,7 +2,7 @@ import React from "react";
 import Loader from "./components/loader";
 import Message from "./components/message";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
-import { getUserThunk } from "./redux/thunks";
+import { getAllTasksThunk, getUserThunk } from "./redux/thunks";
 import { useRoutes } from "./routes";
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   React.useEffect(() => {
     if (auth) {
       dispatch(getUserThunk());
+      dispatch(getAllTasksThunk());
     }
   }, [auth]);
 

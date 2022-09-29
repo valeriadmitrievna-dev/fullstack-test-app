@@ -1,7 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { signInService, signUpService } from "../services/auth.service";
+import { getAllTasksService } from "../services/task.service";
 import { getUserService } from "../services/user.service";
 import { ApiError, SignInBody, SignUpBody } from "../types/services";
+import { Task } from "../types/task";
 import { User } from "../types/user";
 
 export const signInThunk = createAsyncThunk<
@@ -37,6 +39,19 @@ export const getUserThunk = createAsyncThunk<
 >("user/data", async (__, thunkApi) => {
   try {
     const { data } = await getUserService();
+    return data;
+  } catch (error) {
+    return thunkApi.rejectWithValue({ error: (error as Error).message });
+  }
+});
+
+export const getAllTasksThunk = createAsyncThunk<
+  Task[],
+  void,
+  { rejectValue: ApiError }
+>("tasks/get", async (__, thunkApi) => {
+  try {
+    const { data } = await getAllTasksService();
     return data;
   } catch (error) {
     return thunkApi.rejectWithValue({ error: (error as Error).message });
