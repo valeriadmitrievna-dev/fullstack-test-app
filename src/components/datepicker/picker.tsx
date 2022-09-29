@@ -62,7 +62,9 @@ const Picker = ({ opened, value, onChange, position }: PickerProps) => {
             start: startOfISOWeek(currentMonth),
             end: endOfISOWeek(currentMonth),
           }).map((weekday) => (
-            <span className={s.weekday}>{format(weekday, "EEE")}</span>
+            <span key={weekday.toDateString()} className={s.weekday}>
+              {format(weekday, "EEE")}
+            </span>
           ))}
         </div>
         <div className={s.body}>
@@ -71,6 +73,7 @@ const Picker = ({ opened, value, onChange, position }: PickerProps) => {
             end: endOfMonth(currentMonth),
           }).map((day) => (
             <button
+              key={day.toDateString()}
               className={classNames(s.day, {
                 [s.today]: isToday(day),
                 [s.active]: value && isSameDay(day, value),
