@@ -8,10 +8,16 @@ import Picker from "./picker";
 interface DatePickerProps {
   onChange: (date: Date) => void;
   value?: Date;
+  opened?: boolean;
   className?: string;
 }
 
-const DatePicker = ({ onChange, value, className }: DatePickerProps) => {
+const DatePicker = ({
+  onChange,
+  value,
+  opened,
+  className,
+}: DatePickerProps) => {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const wrapper = classNames(s.wrapper, className);
   const [isPickerOpened, setPickerOpened] = React.useState<boolean>(false);
@@ -24,6 +30,10 @@ const DatePicker = ({ onChange, value, className }: DatePickerProps) => {
     setPickerOpened(false);
   };
 
+  React.useEffect(() => {
+    if (!opened) closePicker();
+  }, [opened]);
+
   return (
     <div ref={wrapperRef} className={wrapper}>
       <div className={s.output} onClick={togglePicker}>
@@ -33,7 +43,7 @@ const DatePicker = ({ onChange, value, className }: DatePickerProps) => {
         </span>
       </div>
       <Picker
-        opened={isPickerOpened}
+        opened={isPickerOpened && !!opened}
         value={value}
         position={{
           x: wrapperRef?.current?.getBoundingClientRect().x || 0,

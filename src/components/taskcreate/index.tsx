@@ -60,7 +60,11 @@ const TaskCreate = () => {
             className={s.field}
           />
           <div className={s.footer}>
-            <DatePicker value={newTaskDate} onChange={handleSetNewTaskDate} />
+            <DatePicker
+              opened={isTaskCreateOpened}
+              value={newTaskDate}
+              onChange={handleSetNewTaskDate}
+            />
             <button className={s.button}>create</button>
           </div>
         </div>
