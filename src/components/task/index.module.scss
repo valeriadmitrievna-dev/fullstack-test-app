@@ -1,0 +1,12 @@
+@import "../../styles/colors.scss";
+
+.task {
+  background-color: $white;
+  padding: 8px 14px;
+  border-radius: 4px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+}
