@@ -15,9 +15,9 @@ const Todo = () => {
         <div className={s.taskSearch}>
           <Input
             id="search"
-            value=""
+            value="fd"
             onChange={() => {}}
-            label="search task"
+            placeholder="search task"
             className={s.field}
           />
         </div>
