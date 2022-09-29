@@ -21,6 +21,11 @@ export const rootSlice = createSlice({
     removeError(state) {
       state.error = undefined;
     },
+    logout(state) {
+      localStorage.removeItem("token");
+      state.user = undefined;
+      state.auth = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signInThunk.fulfilled, (state, { payload }) => {
@@ -47,6 +52,6 @@ export const rootSlice = createSlice({
   },
 });
 
-export const { removeError } = rootSlice.actions;
+export const { removeError, logout } = rootSlice.actions;
 
 export default rootSlice.reducer;

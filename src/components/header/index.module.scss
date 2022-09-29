@@ -1,0 +1,32 @@
+@import "../../styles/colors.scss";
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $main_brand;
+  padding: 8px 20px;
+  border-radius: 4px;
+  border-left: 8px solid $dark_shades;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.username {
+  line-height: 1;
+  font-size: 14px;
+}
+
+.manage {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}
