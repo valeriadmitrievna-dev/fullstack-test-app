@@ -1,0 +1,112 @@
+@import "../../styles/colors.scss";
+
+.wrapper {
+  position: relative;
+}
+
+.output {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: $light_shades;
+  border: 2px solid $dark_shades;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+}
+
+.date {
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.picker {
+  border-radius: 4px;
+  background-color: $light_shades;
+  border: 2px solid $dark_shades;
+  position: absolute;
+  transition: visibility 0.3s ease, opacity 0.3s ease;
+  visibility: hidden;
+  opacity: 0;
+
+  &.opened {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+
+    .chevron {
+      width: 12px;
+      height: 12px;
+
+      &.prev {
+        transform: rotate(90deg);
+      }
+
+      &.next {
+        transform: rotate(-90deg);
+      }
+    }
+
+    .month {
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    border-bottom: 2px solid rgba($dark_shades, 0.25);
+  }
+
+  .weekdays {
+    padding: 4px 12px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+
+    .weekday {
+      opacity: 0.5;
+      font-weight: 500;
+    }
+  }
+
+  .body {
+    padding: 12px;
+    padding-top: 4px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 12px;
+
+    .day {
+      display: inline-block;
+      font-weight: 500;
+      width: 26px;
+      height: 26px;
+      font-size: 14px;
+      border-radius: 4px;
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      &:not(:disabled):hover,
+      &.active {
+        background-color: $light_accent;
+      }
+
+      &.today {
+        background-color: $main_brand;
+      }
+    }
+  }
+}
