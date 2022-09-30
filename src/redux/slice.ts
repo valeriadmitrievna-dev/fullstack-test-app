@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Task } from "../types/task";
 import { User } from "../types/user";
 import {
+  createTaskThunk,
   getAllTasksThunk,
   getUserThunk,
   signInThunk,
@@ -69,6 +70,13 @@ export const rootSlice = createSlice({
       state.error = payload?.error;
       state.auth = false;
       localStorage.removeItem("token");
+    });
+    builder.addCase(createTaskThunk.fulfilled, (state, { payload }) => {
+      state.tasks = [payload, ...state.tasks];
+    });
+    builder.addCase(createTaskThunk.rejected, (state, { payload }) => {
+      state.error = undefined
+      state.error = payload?.error;
     });
   },
 });

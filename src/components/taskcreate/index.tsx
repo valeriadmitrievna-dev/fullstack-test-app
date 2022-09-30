@@ -7,8 +7,13 @@ import { ReactComponent as Chevron } from "../../assets/chevron-down.svg";
 import DatePicker from "../../components/datepicker";
 import { isSameDay } from "date-fns";
 import { getStringWithNormalSpaces } from "../../utils/helpers";
+import { useAppDispatch } from "../../redux/hooks";
+import { createTaskThunk } from "../../redux/thunks";
+import Loader from "../loader";
 
 const TaskCreate = () => {
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = React.useState<boolean>(false);
   const taskCreateContent = React.useRef<HTMLDivElement>(null);
   const [isTaskCreateOpened, setTaskCreateOpened] =
     React.useState<boolean>(false);
@@ -45,13 +50,20 @@ const TaskCreate = () => {
   const handleCreateTask = () => {
     const normalizedTitle = getStringWithNormalSpaces(newTaskTitle);
     const normalizedDescription = getStringWithNormalSpaces(newTaskDescription);
-    console.log({
-      title: normalizedTitle,
-      description:
-        normalizedDescription.length
+    setLoading(true);
+    dispatch(
+      createTaskThunk({
+        title: normalizedTitle,
+        description: normalizedDescription.length
           ? normalizedDescription
           : null,
-      deadline: newTaskDeadline,
+        deadline: newTaskDeadline,
+      })
+    ).then(() => {
+      setNewTaskTitle("");
+      setNewTaskDescription("");
+      setNewTaskDeadline(null);
+      setLoading(false);
     });
   };
 
@@ -64,47 +76,54 @@ const TaskCreate = () => {
 
   return (
     <div className={s.taskCreate}>
-      <div className={header}>
-        <h3>Create new task</h3>
-        <button className={chevron} onClick={toggleTaskCreated}>
-          <Chevron />
-        </button>
-      </div>
-      <div
-        className={s.body}
-        style={{
-          height: isTaskCreateOpened
-            ? taskCreateContent?.current?.getBoundingClientRect().height + "px"
-            : 0,
-        }}
-      >
-        <div ref={taskCreateContent} className={s.content}>
-          <Input
-            id="newTaskTitle"
-            value={newTaskTitle}
-            onChange={handleSetNewTaskTitle}
-            placeholder="new task title"
-            className={s.field}
-          />
-          <TextArea
-            id="newTaskDescription"
-            value={newTaskDescription}
-            onChange={handleSetNewTaskDescription}
-            placeholder="new task description"
-            className={s.field}
-          />
-          <div className={s.footer}>
-            <DatePicker
-              opened={isTaskCreateOpened}
-              value={newTaskDeadline}
-              onChange={handleSetNewTaskDeadline}
-            />
-            <button className={s.button} onClick={handleCreateTask}>
-              create
+      {loading ? (
+        <Loader className={s.loader} />
+      ) : (
+        <>
+          <div className={header}>
+            <h3>Create new task</h3>
+            <button className={chevron} onClick={toggleTaskCreated}>
+              <Chevron />
             </button>
           </div>
-        </div>
-      </div>
+          <div
+            className={s.body}
+            style={{
+              height: isTaskCreateOpened
+                ? taskCreateContent?.current?.getBoundingClientRect().height +
+                  "px"
+                : 0,
+            }}
+          >
+            <div ref={taskCreateContent} className={s.content}>
+              <Input
+                id="newTaskTitle"
+                value={newTaskTitle}
+                onChange={handleSetNewTaskTitle}
+                placeholder="new task title"
+                className={s.field}
+              />
+              <TextArea
+                id="newTaskDescription"
+                value={newTaskDescription}
+                onChange={handleSetNewTaskDescription}
+                placeholder="new task description"
+                className={s.field}
+              />
+              <div className={s.footer}>
+                <DatePicker
+                  opened={isTaskCreateOpened}
+                  value={newTaskDeadline}
+                  onChange={handleSetNewTaskDeadline}
+                />
+                <button className={s.button} onClick={handleCreateTask}>
+                  create
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

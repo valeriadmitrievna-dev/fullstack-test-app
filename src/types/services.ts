@@ -15,5 +15,6 @@ export type SignUpBody = {
 
 export type CreateTaskBody = {
   title: string;
-  description?: string;
+  description: string | null;
+  deadline: Date | null;
 };

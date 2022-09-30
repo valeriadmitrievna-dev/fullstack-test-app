@@ -1,5 +1,5 @@
 import API from "./index";
-import { ApiError } from "../types/services";
+import { ApiError, CreateTaskBody } from "../types/services";
 import { AxiosError } from "axios";
 
 export const getAllTasksService = async () => {
@@ -14,9 +14,9 @@ export const getAllTasksService = async () => {
   }
 };
 
-export const createTaskService = async () => {
+export const createTaskService = async (body: CreateTaskBody) => {
   try {
-    const response = await API.get("/tasks");
+    const response = await API.post("/tasks", body);
     return response;
   } catch (error) {
     throw new Error(

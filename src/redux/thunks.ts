@@ -1,8 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { signInService, signUpService } from "../services/auth.service";
-import { getAllTasksService } from "../services/task.service";
+import {
+  createTaskService,
+  getAllTasksService,
+} from "../services/task.service";
 import { getUserService } from "../services/user.service";
-import { ApiError, SignInBody, SignUpBody } from "../types/services";
+import {
+  ApiError,
+  CreateTaskBody,
+  SignInBody,
+  SignUpBody,
+} from "../types/services";
 import { Task } from "../types/task";
 import { User } from "../types/user";
 
@@ -52,6 +60,19 @@ export const getAllTasksThunk = createAsyncThunk<
 >("tasks/get", async (__, thunkApi) => {
   try {
     const { data } = await getAllTasksService();
+    return data;
+  } catch (error) {
+    return thunkApi.rejectWithValue({ error: (error as Error).message });
+  }
+});
+
+export const createTaskThunk = createAsyncThunk<
+  Task,
+  CreateTaskBody,
+  { rejectValue: ApiError }
+>("tasks/create", async (body, thunkApi) => {
+  try {
+    const { data } = await createTaskService(body);
     return data;
   } catch (error) {
     return thunkApi.rejectWithValue({ error: (error as Error).message });

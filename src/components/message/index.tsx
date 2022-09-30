@@ -6,6 +6,7 @@ import { ReactComponent as Info } from "../../assets/info-circle.svg";
 import { ReactComponent as Success } from "../../assets/success-circle.svg";
 import { useAppDispatch } from "../../redux/hooks";
 import { removeError } from "../../redux/slice";
+import ReactPortal from "../portal";
 
 interface MessageProps {
   children: React.ReactNode;
@@ -32,18 +33,21 @@ const Message = ({ children, type = "info" }: MessageProps) => {
     }, 3000);
 
     return () => {
+      dispatch(removeError());
       clearTimeout(animationTimeout);
       clearTimeout(unmountTimeout);
     };
   }, []);
 
   return (
-    <div className={message}>
-      {type === "info" && <Info className={s.icon} />}
-      {type === "success" && <Success className={s.icon} />}
-      {type === "error" && <Error className={s.icon} />}
-      {children}
-    </div>
+    <ReactPortal wrapperId="message-portal">
+      <div className={message}>
+        {type === "info" && <Info className={s.icon} />}
+        {type === "success" && <Success className={s.icon} />}
+        {type === "error" && <Error className={s.icon} />}
+        {children}
+      </div>
+    </ReactPortal>
   );
 };
 
