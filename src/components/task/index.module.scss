@@ -20,6 +20,9 @@
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .description {
@@ -151,8 +154,27 @@
 .subtitle {
   font-weight: 500;
   margin-bottom: 4px;
+}
 
-  &:not(:first-of-type) {
-    margin-top: 8px;
+.checkmark {
+  width: 24px;
+  height: 24px;
+}
+
+.done {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: $light_accent;
+  color: $light_shades;
+  width: fit-content;
+  padding: 2px 8px;
+  border-radius: 8px;
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke-width: 3px;
   }
 }

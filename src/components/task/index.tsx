@@ -6,6 +6,8 @@ import { ReactComponent as Clock } from "../../assets/clock.svg";
 import { ReactComponent as Pencil } from "../../assets/pencil.svg";
 import { ReactComponent as Trash } from "../../assets/trash.svg";
 import { ReactComponent as Eye } from "../../assets/eye.svg";
+import { ReactComponent as Circle } from "../../assets/circle.svg";
+import { ReactComponent as Check } from "../../assets/check.svg";
 import classNames from "classnames";
 import Modal from "../modal";
 import Input from "../input";
@@ -83,6 +85,17 @@ const Task = ({ data, className }: TaskProps) => {
     setInfoModalOpened(false);
   };
 
+  const handleToggleCheck = () => {
+    dispatch(
+      editTaskThunk({
+        id: data.id,
+        body: {
+          done: !data.done,
+        },
+      })
+    );
+  };
+
   return (
     <>
       {isInfoModalOpened && (
@@ -91,6 +104,12 @@ const Task = ({ data, className }: TaskProps) => {
           close={closeInfoModal}
           title={data.title}
         >
+          {data.done && (
+            <span className={s.done}>
+              <Check />
+              done
+            </span>
+          )}
           {data.description && (
             <>
               <p className={s.subtitle}>Description:</p>
@@ -100,7 +119,7 @@ const Task = ({ data, className }: TaskProps) => {
           {data.deadline && (
             <>
               <p className={s.subtitle}>Deadline:</p>
-              <p>{format(new Date(data.deadline), 'dd MMMM, yyyy')}</p>
+              <p>{format(new Date(data.deadline), "dd MMMM, yyyy")}</p>
             </>
           )}
         </Modal>
@@ -158,7 +177,12 @@ const Task = ({ data, className }: TaskProps) => {
             <Trash />
           </button>
         </div>
-        <h4 className={s.title}>{data.title}</h4>
+        <h4 className={s.title}>
+          <button className={s.checkmark} onClick={handleToggleCheck}>
+            {data.done ? <Check /> : <Circle />}
+          </button>
+          {data.title}
+        </h4>
         {data.description && (
           <p className={s.description}>{data.description}</p>
         )}
