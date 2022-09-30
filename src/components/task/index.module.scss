@@ -7,7 +7,7 @@
   position: relative;
   overflow: hidden;
 
-  &:hover .edit {
+  &:hover .manage {
     transform: translateY(0);
   }
 }
@@ -16,7 +16,7 @@
   font-size: 18px;
   font-weight: 600;
   width: 100%;
-  max-width: calc(100% - 40px);
+  max-width: calc(100% - 120px);
 }
 
 .description {
@@ -74,20 +74,6 @@
   color: $error;
 }
 
-.edit {
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  background-color: $dark_accent;
-  padding: 4px;
-  color: $white;
-  border-radius: 0 0 6px 6px;
-  top: 0;
-  right: 14px;
-  transform: translateY(-150%);
-  transition: transform 0.3s ease-out;
-}
-
 .field {
   margin-bottom: 14px;
 }
@@ -117,5 +103,44 @@
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+.manage {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  transition: transform 0.3s ease-out;
+  transform: translateY(-150%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .button {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    color: $white;
+    border-radius: 0 0 6px 6px;
+    transition: background-color .3s ease;
+
+    &.check {
+      background-color: $main_brand;
+      &:hover {
+        background-color: darken($main_brand, 10);
+      }
+    }
+    &.edit {
+      background-color: $dark_accent;
+      &:hover {
+        background-color: darken($dark_accent, 10);
+      }
+    }
+    &.delete {
+      background-color: $error;
+      &:hover {
+        background-color: darken($error, 10);
+      }
+    }
   }
 }

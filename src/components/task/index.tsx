@@ -4,6 +4,8 @@ import { Task as TaskType } from "../../types/task";
 import { differenceInDays, format, isSameDay } from "date-fns";
 import { ReactComponent as Clock } from "../../assets/clock.svg";
 import { ReactComponent as Pencil } from "../../assets/pencil.svg";
+import { ReactComponent as Trash } from "../../assets/trash.svg";
+import { ReactComponent as Eye } from "../../assets/eye.svg";
 import classNames from "classnames";
 import Modal from "../modal";
 import Input from "../input";
@@ -105,9 +107,23 @@ const Task = ({ data, className }: TaskProps) => {
         </Modal>
       )}
       <div className={task}>
-        <button className={s.edit} onClick={openModal}>
-          <Pencil />
-        </button>
+        <div className={s.manage}>
+          <button
+            className={classNames(s.button, s.check)}
+            onClick={openModal}
+          >
+            <Eye />
+          </button>
+          <button className={classNames(s.button, s.edit)} onClick={openModal}>
+            <Pencil />
+          </button>
+          <button
+            className={classNames(s.button, s.delete)}
+            onClick={openModal}
+          >
+            <Trash />
+          </button>
+        </div>
         <h4 className={s.title}>{data.title}</h4>
         {data.description && (
           <p className={s.description}>{data.description}</p>
