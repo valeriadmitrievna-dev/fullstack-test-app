@@ -11,6 +11,7 @@ interface InputProps {
   type?: "text" | "password";
   icon?: React.ReactNode;
   className?: string;
+  help?: string;
 }
 
 const Input = ({
@@ -22,6 +23,7 @@ const Input = ({
   type = "text",
   icon,
   className,
+  help,
 }: InputProps) => {
   const input = classNames(s.input, className);
   return (
@@ -41,6 +43,7 @@ const Input = ({
           placeholder={placeholder}
         />
       </div>
+      {help && <p className={s.help}>{help}</p>}
     </>
   );
 };

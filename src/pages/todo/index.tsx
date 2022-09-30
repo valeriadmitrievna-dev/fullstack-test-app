@@ -11,6 +11,13 @@ import Task from "../../components/task";
 
 const Todo = () => {
   const { tasks } = useAppSelector((state) => state.root);
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+
+  const handleChangeSearchQuery = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <Page className={s.page}>
@@ -20,17 +27,24 @@ const Todo = () => {
         <div className={s.taskSearch}>
           <Input
             id="search"
-            value=""
-            onChange={() => {}}
-            placeholder="search task"
+            value={searchQuery}
+            onChange={handleChangeSearchQuery}
+            placeholder="search"
             className={s.field}
             icon={<Search />}
+            help="You can search any task by title or by description"
           />
         </div>
         <div className={s.tasks}>
-          {tasks.map((task) => (
-            <Task key={`task-${task.id}`} data={task} />
-          ))}
+          {tasks
+            .filter(
+              (task) =>
+                task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.description?.toLowerCase().includes(searchQuery.toLowerCase())
+            )
+            .map((task) => (
+              <Task key={`task-${task.id}`} data={task} />
+            ))}
         </div>
       </div>
     </Page>
