@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Todo App
+Задание состояло из нескольких уровней сложности. Более удобным путём для меня было не двигаться от простого к сложному, а сразу определиться с тем, что я буду делать Fullstack приложение используя Node.js/Express.js для бэкенда, PostgreSQL в качестве реляционной базы данных и  React.js в качестве фронтенд фреймворка. Поэтому я сначала написала бекенд часть, а потом приступила к части фронтенда.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Стек
+**Frontend**
+- React.js
+- TypeScript
+- scss modules
+- Redux Toolkit
+- Axios
+- React Router Dom v6
 
-## Available Scripts
+**Backend**
+- Node.js
+- Express
+- sequelize
 
-In the project directory, you can run:
+## Инструкция по запуску проекта
+Сначала нужно склонировать проект
+```sh
+git clone https://github.com/valeriadmitrievna-dev/fullstack-test-app.git
+```
+Затем нужно перейти в папку с проектом
+```sh
+cd fullstack-test-app
+```
+Установить node_modules
+```sh
+npm install
+```
+Проверить наличие файла переменных окружения в корне проекта (**.env**). Так как этот файл добавлен в .gitignore, то при клонировании проекта его не будет. Его необходимо создать и добавить переменную **REACT_APP_API_ENDPOINT** равную **https://random-todo-api.herokuapp.com/**, если вы хотите обращаться к бекенду на heroku, или **http://localhost:[PORT]** (PORT использовать тот, который вы указать в .env файле бекенда)
 
-### `npm start`
+И запустить проект
+```sh
+npm start
+```
+## ✅ Level 1: Frontend
+> Делаем классическое ToDo List приложение. Пользователь должен видеть список задач, иметь 
+> возможность их добавлять, удалять, редактировать, отмечать как выполненные. Хранить данные в 
+> оперативной памяти. Для реализации использовать VanillaJS или React. Дополнительные JS библиотеки 
+> можно использовать при необходимости. Для работы с CSS можно использовать любые библиотеки, 
+> но нельзя использовать готовые компоненты(Material UI, Ant Design и т.д). Стилизовать интерфейс по 
+> своему вкусу.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Несмотря на то, что я условно пропустила этот шаг, приступив сразу к созданию фронтенда на React, связанного с бекендом, могу предположить, что этот шаг выполнен.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## ✅ Level 2: Новые фичи
+Уровень 2 - добавление новых фич. В задании сказано:
+> Этот уровень содержит несколько разных вариантов доработок, **можно выполнить только часть из них**
 
-### `npm test`
+Поэтому пройдемся по списку и рассмотрим, какие фичи из оригинального списка реализованы в этом проекте.
+✅ **Поиск по задачам**
+✅ **Хранить данные в LocalStorage или IndexedDB** 
+считаю этот шаг выполненным, потому как в итоге данные хранятся в PostgreSQL + Redux Toolkit на фронте
+✅ **Использование библиотеки управления состоянием**
+полагаю к этому пункту можно отнести использование useState и Redux Toolkit
+✅ **Детальный просмотр задачи при клике и добавление полного описание к ней, в списке отображаются только заголовки**
+В списке можно увидеть часть описания задачи, но максимум - 2 строчки и далее `text-overflow: ellipsis;`
+✅ **Указание времени создания задачи, возможность указать ожидаемое время выполнение, добавления задачам визуального статуса “Просрочена”**
+❌ <s>Возможность создавать различные списки задач со своими заголовками, а также удалять, просматривать и редактировать их</s>
+❌ <s>Адаптивная верстка</s>
+❌ <s>Изменение очередности задач с помощью Drag&Drop</s>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✅ Level 3: Backend
+> Добавляем к нашему приложению бэкенда на NodeJS + Express(по желанию). Теперь данные по приложения должны храниться в оперативной памяти сервера. Сервер должен предоставлять HTTP REST API, которое будет использовать фронт.
 
-### `npm run build`
+## ✅ Level 4: Database
+> Для хранения данных приложения будем использовать реляционную базу данных(можно брать любую). Доработать сервер для взаимодействия с ней, отказаться от хранения в оперативной памяти.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+В этом проекте в качестве реляционной базы данных используется **PostgreSQL** в связке с **sequelize**.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## ❌ Level 5: Инфраструктура
+> Все части приложения нужно запускать в Docker контейнерах. UI, сервер и даже базу данных. Должно получиться 3 контейнера. Опционально: использовать docker-compose, монтировать volume для базы данных.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Данный пункт не был выполнен за неимением у меня опыта работы с Docker'ом. **Однако** вместо этого я задеплоила проект на **heroku**. Ознакомиться с ним вы можете по ссылке - https://random-todo-application.herokuapp.com/
