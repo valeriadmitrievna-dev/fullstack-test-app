@@ -29,3 +29,13 @@ export const validatePassword = (password: string) => {
     return false;
   }
 };
+
+export const validateTaskTitle = (title: string) => {
+  if (!title) {
+    return "Title is required";
+  } else if (getStringWithNormalSpaces(title).length < 4) {
+    return "Title length should be 4 or greater";
+  } else {
+    return false;
+  }
+};

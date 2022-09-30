@@ -10,6 +10,8 @@ import { getStringWithNormalSpaces } from "../../utils/helpers";
 import { useAppDispatch } from "../../redux/hooks";
 import { createTaskThunk } from "../../redux/thunks";
 import Loader from "../loader";
+import { validateTaskTitle } from "../../utils/validation";
+import { createError } from "../../redux/slice";
 
 const TaskCreate = () => {
   const dispatch = useAppDispatch();
@@ -50,21 +52,26 @@ const TaskCreate = () => {
   const handleCreateTask = () => {
     const normalizedTitle = getStringWithNormalSpaces(newTaskTitle);
     const normalizedDescription = getStringWithNormalSpaces(newTaskDescription);
-    setLoading(true);
-    dispatch(
-      createTaskThunk({
-        title: normalizedTitle,
-        description: normalizedDescription.length
-          ? normalizedDescription
-          : null,
-        deadline: newTaskDeadline,
-      })
-    ).then(() => {
-      setNewTaskTitle("");
-      setNewTaskDescription("");
-      setNewTaskDeadline(null);
-      setLoading(false);
-    });
+    const titleError = validateTaskTitle(normalizedTitle);
+    if (titleError) {
+      dispatch(createError(titleError));
+    } else {
+      setLoading(true);
+      dispatch(
+        createTaskThunk({
+          title: normalizedTitle,
+          description: normalizedDescription.length
+            ? normalizedDescription
+            : null,
+          deadline: newTaskDeadline,
+        })
+      ).then(() => {
+        setNewTaskTitle("");
+        setNewTaskDescription("");
+        setNewTaskDeadline(null);
+        setLoading(false);
+      });
+    }
   };
 
   const header = classNames(s.header, {

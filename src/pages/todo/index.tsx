@@ -27,7 +27,7 @@ const Todo = () => {
             icon={<Search />}
           />
         </div>
-        <div>
+        <div className={s.tasks}>
           {tasks.map((task) => (
             <Task key={`task-${task.id}`} data={task} />
           ))}

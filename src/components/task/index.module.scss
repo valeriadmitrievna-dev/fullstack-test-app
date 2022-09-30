@@ -4,9 +4,86 @@
   background-color: $white;
   padding: 8px 14px;
   border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+
+  &:hover .edit {
+    transform: translateY(0);
+  }
 }
 
 .title {
   font-size: 18px;
   font-weight: 600;
+  width: 100%;
+  max-width: calc(100% - 40px);
+}
+
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin-top: 4px;
+  width: 100%;
+  max-width: calc(100% - 40px);
+}
+
+.footer {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deadline {
+  background-color: $light_accent;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: $white;
+  line-height: 1;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2px;
+  }
+
+  &.today {
+    background-color: $warning;
+  }
+
+  &.expired {
+    background-color: $error;
+  }
+}
+
+.warning {
+  font-weight: 500;
+  color: darken($warning, 15);
+}
+
+.error {
+  font-weight: 500;
+  color: $error;
+}
+
+.edit {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  background-color: $dark_accent;
+  padding: 4px;
+  color: $white;
+  border-radius: 0 0 6px 6px;
+  top: 0;
+  right: 14px;
+  transform: translateY(-150%);
+  transition: transform 0.3s ease-out;
 }

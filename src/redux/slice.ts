@@ -27,6 +27,9 @@ export const rootSlice = createSlice({
   name: "root",
   initialState,
   reducers: {
+    createError(state, { payload }: { payload: string }) {
+      state.error = payload;
+    },
     removeError(state) {
       state.error = undefined;
     },
@@ -75,12 +78,12 @@ export const rootSlice = createSlice({
       state.tasks = [payload, ...state.tasks];
     });
     builder.addCase(createTaskThunk.rejected, (state, { payload }) => {
-      state.error = undefined
+      state.error = undefined;
       state.error = payload?.error;
     });
   },
 });
 
-export const { removeError, logout } = rootSlice.actions;
+export const { createError, removeError, logout } = rootSlice.actions;
 
 export default rootSlice.reducer;
