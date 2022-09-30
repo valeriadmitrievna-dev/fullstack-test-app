@@ -3,6 +3,7 @@ import { Task } from "../types/task";
 import { User } from "../types/user";
 import {
   createTaskThunk,
+  editTaskThunk,
   getAllTasksThunk,
   getUserThunk,
   signInThunk,
@@ -78,6 +79,16 @@ export const rootSlice = createSlice({
       state.tasks = [payload, ...state.tasks];
     });
     builder.addCase(createTaskThunk.rejected, (state, { payload }) => {
+      state.error = undefined;
+      state.error = payload?.error;
+    });
+    builder.addCase(editTaskThunk.fulfilled, (state, { payload }) => {
+      state.tasks = state.tasks.map((task) => {
+        if (task.id === payload.id) return payload;
+        return task;
+      });
+    });
+    builder.addCase(editTaskThunk.rejected, (state, { payload }) => {
       state.error = undefined;
       state.error = payload?.error;
     });

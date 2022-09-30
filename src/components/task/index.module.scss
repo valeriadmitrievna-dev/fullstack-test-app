@@ -110,8 +110,12 @@
   color: $light_shades;
   transition: background-color 0.3s ease, color 0.3s ease;
 
-  &:hover {
+  &:not(:disabled):hover {
     background-color: $dark_accent;
     color: $white;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }

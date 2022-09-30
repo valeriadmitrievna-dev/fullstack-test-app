@@ -9,6 +9,8 @@ import Modal from "../modal";
 import Input from "../input";
 import TextArea from "../textarea";
 import DatePicker from "../datepicker";
+import { useAppDispatch } from "../../redux/hooks";
+import { editTaskThunk } from "../../redux/thunks";
 
 interface TaskProps {
   data: TaskType;
@@ -16,8 +18,9 @@ interface TaskProps {
 }
 
 const Task = ({ data, className }: TaskProps) => {
+  const dispatch = useAppDispatch();
   const task = classNames(s.task, className);
-  const deadline = classNames(s.deadline, {
+  const deadlineStyle = classNames(s.deadline, {
     [s.today]: data.deadline && isSameDay(new Date(data.deadline), new Date()),
     [s.expired]:
       data.deadline &&
@@ -37,6 +40,32 @@ const Task = ({ data, className }: TaskProps) => {
   const [description, setDescription] = React.useState<string>(
     data.description || ""
   );
+  const [deadline, setDeadline] = React.useState<Date | null>(data.deadline);
+
+  const handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+  const handleChangeDescription = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setDescription(event.target.value);
+  };
+  const handleChangeDeadline = (date: Date) => {
+    setDeadline(date);
+  };
+
+  const handleEditTask = () => {
+    dispatch(
+      editTaskThunk({
+        id: data.id,
+        body: {
+          title,
+          description,
+          deadline,
+        },
+      })
+    ).then(closeModal);
+  };
 
   return (
     <>
@@ -45,20 +74,33 @@ const Task = ({ data, className }: TaskProps) => {
           <Input
             id="editTitle"
             value={title}
-            onChange={() => {}}
+            onChange={handleChangeTitle}
             label="title"
             className={s.field}
           />
           <TextArea
             id="editDescription"
             value={description}
-            onChange={() => {}}
+            onChange={handleChangeDescription}
             label="description"
             className={s.field}
           />
           <div className={s.row}>
-            <DatePicker value={null} onChange={() => {}} />
-            <button className={s.save}>save</button>
+            <DatePicker value={deadline} onChange={handleChangeDeadline} />
+            <button
+              disabled={
+                title === data.title &&
+                (!data.description || description == data.description) &&
+                isSameDay(
+                  data.deadline ? new Date(data.deadline) : new Date(),
+                  deadline ? new Date(deadline) : new Date()
+                )
+              }
+              onClick={handleEditTask}
+              className={s.save}
+            >
+              save
+            </button>
           </div>
         </Modal>
       )}
@@ -72,7 +114,7 @@ const Task = ({ data, className }: TaskProps) => {
         )}
         {data.deadline && (
           <div className={s.footer}>
-            <p className={deadline}>
+            <p className={deadlineStyle}>
               <Clock className={s.icon} />
               {format(new Date(data.deadline), "dd.MM.yyyy")}
             </p>

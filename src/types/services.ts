@@ -1,20 +1,18 @@
-export type ApiError = {
-  error: string;
-};
+import { Task } from "./task";
+import { User } from "./user";
 
-export type SignInBody = {
-  username: string;
-  password: string;
-};
+export type ApiError = { error: string };
 
-export type SignUpBody = {
-  name: string;
-  username: string;
-  password: string;
-};
+export type SignInBody = Pick<User, "username"> & { password: string };
+export type SignUpBody = Pick<User, "username" | "name"> & { password: string };
 
-export type CreateTaskBody = {
-  title: string;
-  description: string | null;
-  deadline: Date | null;
+export type CreateTaskBody = Pick<Task, "title" | "description" | "deadline">;
+export type EditTaskBody = {
+  id: number;
+  body: {
+    title?: string;
+    description?: string | null;
+    deadline?: Date | null;
+    done?: boolean;
+  };
 };
