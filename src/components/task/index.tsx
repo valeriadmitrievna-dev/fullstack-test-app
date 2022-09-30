@@ -15,6 +15,7 @@ import TextArea from "../textarea";
 import DatePicker from "../datepicker";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteTaskThunk, editTaskThunk } from "../../redux/thunks";
+import Loader from "../loader";
 
 interface TaskProps {
   data: TaskType;
@@ -85,7 +86,10 @@ const Task = ({ data, className }: TaskProps) => {
     setInfoModalOpened(false);
   };
 
+  const [isCheckLoading, setCheckLoading] = React.useState<boolean>(false);
+
   const handleToggleCheck = () => {
+    setCheckLoading(true);
     dispatch(
       editTaskThunk({
         id: data.id,
@@ -93,7 +97,7 @@ const Task = ({ data, className }: TaskProps) => {
           done: !data.done,
         },
       })
-    );
+    ).then(() => setCheckLoading(false));
   };
 
   return (
@@ -178,9 +182,14 @@ const Task = ({ data, className }: TaskProps) => {
           </button>
         </div>
         <h4 className={s.title}>
-          <button className={s.checkmark} onClick={handleToggleCheck}>
-            {data.done ? <Check /> : <Circle />}
-          </button>
+          {isCheckLoading ? (
+            <Loader className={s.smallLoader} />
+          ) : (
+            <button className={s.checkmark} onClick={handleToggleCheck}>
+              {data.done ? <Check /> : <Circle />}
+            </button>
+          )}
+
           {data.title}
         </h4>
         {data.description && (
