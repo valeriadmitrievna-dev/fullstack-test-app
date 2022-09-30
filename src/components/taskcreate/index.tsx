@@ -119,7 +119,6 @@ const TaskCreate = () => {
               />
               <div className={s.footer}>
                 <DatePicker
-                  opened={isTaskCreateOpened}
                   value={newTaskDeadline}
                   onChange={handleSetNewTaskDeadline}
                 />

@@ -39,7 +39,7 @@
   transition: visibility 0.3s ease, opacity 0.3s ease;
   visibility: hidden;
   opacity: 0;
-  z-index: inherit;
+  z-index: 1000;
 
   &.opened {
     visibility: visible;
