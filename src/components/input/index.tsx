@@ -12,6 +12,7 @@ interface InputProps {
   icon?: React.ReactNode;
   className?: string;
   help?: string;
+  maxLength?: number;
 }
 
 const Input = ({
@@ -24,6 +25,7 @@ const Input = ({
   icon,
   className,
   help,
+  maxLength,
 }: InputProps) => {
   const input = classNames(s.input, className);
   return (
@@ -41,6 +43,7 @@ const Input = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          maxLength={maxLength}
         />
       </div>
       {help && <p className={s.help}>{help}</p>}

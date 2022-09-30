@@ -73,8 +73,38 @@ const Task = ({ data, className }: TaskProps) => {
     dispatch(deleteTaskThunk(data.id));
   };
 
+  const [isInfoModalOpened, setInfoModalOpened] =
+    React.useState<boolean>(false);
+
+  const openInfoModal = () => {
+    setInfoModalOpened(true);
+  };
+  const closeInfoModal = () => {
+    setInfoModalOpened(false);
+  };
+
   return (
     <>
+      {isInfoModalOpened && (
+        <Modal
+          opened={isInfoModalOpened}
+          close={closeInfoModal}
+          title={data.title}
+        >
+          {data.description && (
+            <>
+              <p className={s.subtitle}>Description:</p>
+              <p>{data.description}</p>
+            </>
+          )}
+          {data.deadline && (
+            <>
+              <p className={s.subtitle}>Deadline:</p>
+              <p>{format(new Date(data.deadline), 'dd MMMM, yyyy')}</p>
+            </>
+          )}
+        </Modal>
+      )}
       {isModalOpened && (
         <Modal title="Edit task" opened={isModalOpened} close={closeModal}>
           <Input
@@ -112,7 +142,10 @@ const Task = ({ data, className }: TaskProps) => {
       )}
       <div className={task}>
         <div className={s.manage}>
-          <button className={classNames(s.button, s.check)}>
+          <button
+            className={classNames(s.button, s.check)}
+            onClick={openInfoModal}
+          >
             <Eye />
           </button>
           <button className={classNames(s.button, s.edit)} onClick={openModal}>

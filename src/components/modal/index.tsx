@@ -30,7 +30,7 @@ const Modal = ({ opened, close, children, title, className }: ModalProps) => {
       <div className={s.overlay}>
         <div ref={bodyRef} className={s.body}>
           <div className={s.header}>
-            {title}
+            <p className={s.title}>{title}</p>
             <button className={s.close} onClick={close}>
               <Close />
             </button>

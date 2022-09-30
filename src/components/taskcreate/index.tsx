@@ -109,6 +109,7 @@ const TaskCreate = () => {
                 onChange={handleSetNewTaskTitle}
                 placeholder="new task title"
                 className={s.field}
+                maxLength={200}
               />
               <TextArea
                 id="newTaskDescription"
