@@ -14,6 +14,7 @@
   border-radius: 4px;
   background-color: $light_shades;
   border: 2px solid $dark_shades;
+  width: fit-content;
 }
 
 .icon {
@@ -38,6 +39,7 @@
   transition: visibility 0.3s ease, opacity 0.3s ease;
   visibility: hidden;
   opacity: 0;
+  z-index: inherit;
 
   &.opened {
     visibility: visible;

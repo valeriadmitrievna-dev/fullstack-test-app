@@ -87,3 +87,31 @@
   transform: translateY(-150%);
   transition: transform 0.3s ease-out;
 }
+
+.field {
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.save {
+  display: block;
+  padding: 8px 24px;
+  border-radius: 4px;
+  background-color: $main_brand;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: $light_shades;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:hover {
+    background-color: $dark_accent;
+    color: $white;
+  }
+}
