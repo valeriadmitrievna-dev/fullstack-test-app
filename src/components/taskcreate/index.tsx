@@ -18,7 +18,7 @@ const TaskCreate = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const taskCreateContent = React.useRef<HTMLDivElement>(null);
   const [isTaskCreateOpened, setTaskCreateOpened] =
-    React.useState<boolean>(false);
+    React.useState<boolean>(true);
 
   const toggleTaskCreated = () => {
     setTaskCreateOpened((pre) => !pre);

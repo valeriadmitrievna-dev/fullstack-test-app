@@ -1,5 +1,4 @@
 import React from "react";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 import ReactPortal from "../portal";
 import s from "./index.module.scss";
 import { ReactComponent as Close } from "../../assets/close.svg";
@@ -25,8 +24,6 @@ const Modal = ({ opened, close, children, title, className }: ModalProps) => {
       body.style.overflowY = "auto";
     };
   }, [opened]);
-
-  useOnClickOutside(bodyRef, close);
 
   return (
     <ReactPortal wrapperId="modal-portal">

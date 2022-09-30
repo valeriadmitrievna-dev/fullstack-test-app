@@ -4,7 +4,6 @@ import { ReactComponent as Calendar } from "../../assets/calendar.svg";
 import { format } from "date-fns";
 import classNames from "classnames";
 import Picker from "./picker";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 interface DatePickerProps {
   onChange: (date: Date) => void;
@@ -27,8 +26,6 @@ const DatePicker = ({ onChange, value, className }: DatePickerProps) => {
   const closePicker = () => {
     setPickerOpened(false);
   };
-
-  useOnClickOutside(wrapperRef, closePicker);
 
   return (
     <div ref={wrapperRef} className={wrapper}>
