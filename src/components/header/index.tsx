@@ -2,9 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import s from "./index.module.scss";
-import { ReactComponent as Settings } from "../../assets/settings.svg";
 import { ReactComponent as Logout } from "../../assets/logout.svg";
-import { Link } from "react-router-dom";
 import { logout } from "../../redux/slice";
 
 interface HeaderProps {
@@ -27,9 +25,6 @@ const Header = ({ className }: HeaderProps) => {
         <p className={s.username}>@{user?.username}</p>
       </div>
       <div className={s.manage}>
-        <Link to="/settings" className={s.icon}>
-          <Settings />
-        </Link>
         <button className={s.icon} onClick={handleLogout}>
           <Logout />
         </button>
