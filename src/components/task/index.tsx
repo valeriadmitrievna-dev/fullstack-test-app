@@ -12,7 +12,7 @@ import Input from "../input";
 import TextArea from "../textarea";
 import DatePicker from "../datepicker";
 import { useAppDispatch } from "../../redux/hooks";
-import { editTaskThunk } from "../../redux/thunks";
+import { deleteTaskThunk, editTaskThunk } from "../../redux/thunks";
 
 interface TaskProps {
   data: TaskType;
@@ -69,6 +69,10 @@ const Task = ({ data, className }: TaskProps) => {
     ).then(closeModal);
   };
 
+  const handleDeleteTask = () => {
+    dispatch(deleteTaskThunk(data.id));
+  };
+
   return (
     <>
       {isModalOpened && (
@@ -108,10 +112,7 @@ const Task = ({ data, className }: TaskProps) => {
       )}
       <div className={task}>
         <div className={s.manage}>
-          <button
-            className={classNames(s.button, s.check)}
-            onClick={openModal}
-          >
+          <button className={classNames(s.button, s.check)}>
             <Eye />
           </button>
           <button className={classNames(s.button, s.edit)} onClick={openModal}>
@@ -119,7 +120,7 @@ const Task = ({ data, className }: TaskProps) => {
           </button>
           <button
             className={classNames(s.button, s.delete)}
-            onClick={openModal}
+            onClick={handleDeleteTask}
           >
             <Trash />
           </button>

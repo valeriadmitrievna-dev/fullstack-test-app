@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { signInService, signUpService } from "../services/auth.service";
 import {
   createTaskService,
+  deleteTaskService,
   editTaskService,
   getAllTasksService,
 } from "../services/task.service";
@@ -9,6 +10,7 @@ import { getUserService } from "../services/user.service";
 import {
   ApiError,
   CreateTaskBody,
+  DeleteTaskId,
   EditTaskBody,
   SignInBody,
   SignUpBody,
@@ -89,6 +91,19 @@ export const editTaskThunk = createAsyncThunk<
   try {
     const { data } = await editTaskService(body);
     return data;
+  } catch (error) {
+    return thunkApi.rejectWithValue({ error: (error as Error).message });
+  }
+});
+
+export const deleteTaskThunk = createAsyncThunk<
+  number,
+  DeleteTaskId,
+  { rejectValue: ApiError }
+>("tasks/delete", async (id, thunkApi) => {
+  try {
+    const res = await deleteTaskService(id);
+    return id;
   } catch (error) {
     return thunkApi.rejectWithValue({ error: (error as Error).message });
   }

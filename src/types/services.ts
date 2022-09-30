@@ -16,3 +16,5 @@ export type EditTaskBody = {
     done?: boolean;
   };
 };
+
+export type DeleteTaskId = number;

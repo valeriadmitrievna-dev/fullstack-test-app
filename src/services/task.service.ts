@@ -1,5 +1,5 @@
 import API from "./index";
-import { ApiError, CreateTaskBody, EditTaskBody } from "../types/services";
+import { ApiError, CreateTaskBody, DeleteTaskId, EditTaskBody } from "../types/services";
 import { AxiosError } from "axios";
 
 export const getAllTasksService = async () => {
@@ -29,6 +29,18 @@ export const createTaskService = async (body: CreateTaskBody) => {
 export const editTaskService = async (data: EditTaskBody) => {
   try {
     const response = await API.put(`/tasks/${data.id}`, data.body);
+    return response;
+  } catch (error) {
+    throw new Error(
+      (error as AxiosError<ApiError>).response?.data.error ||
+        (error as Error).message
+    );
+  }
+};
+
+export const deleteTaskService = async (id: DeleteTaskId) => {
+  try {
+    const response = await API.delete(`/tasks/${id}`);
     return response;
   } catch (error) {
     throw new Error(
