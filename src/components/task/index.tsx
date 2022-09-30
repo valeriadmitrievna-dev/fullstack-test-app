@@ -59,7 +59,10 @@ const Task = ({ data, className }: TaskProps) => {
     setDeadline(date);
   };
 
+  const [isEditLoading, setEditLoading] = React.useState<boolean>(false);
+
   const handleEditTask = () => {
+    setEditLoading(true);
     dispatch(
       editTaskThunk({
         id: data.id,
@@ -69,7 +72,10 @@ const Task = ({ data, className }: TaskProps) => {
           deadline,
         },
       })
-    ).then(closeModal);
+    ).then(() => {
+      setEditLoading(false);
+      closeModal();
+    });
   };
 
   const handleDeleteTask = () => {
@@ -130,37 +136,43 @@ const Task = ({ data, className }: TaskProps) => {
       )}
       {isModalOpened && (
         <Modal title="Edit task" opened={isModalOpened} close={closeModal}>
-          <Input
-            id="editTitle"
-            value={title}
-            onChange={handleChangeTitle}
-            label="title"
-            className={s.field}
-          />
-          <TextArea
-            id="editDescription"
-            value={description}
-            onChange={handleChangeDescription}
-            label="description"
-            className={s.field}
-          />
-          <div className={s.row}>
-            <DatePicker value={deadline} onChange={handleChangeDeadline} />
-            <button
-              disabled={
-                title === data.title &&
-                (!data.description || description == data.description) &&
-                isSameDay(
-                  data.deadline ? new Date(data.deadline) : new Date(),
-                  deadline ? new Date(deadline) : new Date()
-                )
-              }
-              onClick={handleEditTask}
-              className={s.save}
-            >
-              save
-            </button>
-          </div>
+          {isEditLoading ? (
+            <Loader className={s.loader} />
+          ) : (
+            <>
+              <Input
+                id="editTitle"
+                value={title}
+                onChange={handleChangeTitle}
+                label="title"
+                className={s.field}
+              />
+              <TextArea
+                id="editDescription"
+                value={description}
+                onChange={handleChangeDescription}
+                label="description"
+                className={s.field}
+              />
+              <div className={s.row}>
+                <DatePicker value={deadline} onChange={handleChangeDeadline} />
+                <button
+                  disabled={
+                    title === data.title &&
+                    (!data.description || description == data.description) &&
+                    isSameDay(
+                      data.deadline ? new Date(data.deadline) : new Date(),
+                      deadline ? new Date(deadline) : new Date()
+                    )
+                  }
+                  onClick={handleEditTask}
+                  className={s.save}
+                >
+                  save
+                </button>
+              </div>
+            </>
+          )}
         </Modal>
       )}
       <div className={task}>
@@ -183,7 +195,7 @@ const Task = ({ data, className }: TaskProps) => {
         </div>
         <h4 className={s.title}>
           {isCheckLoading ? (
-            <Loader className={s.smallLoader} />
+            <Loader small />
           ) : (
             <button className={s.checkmark} onClick={handleToggleCheck}>
               {data.done ? <Check /> : <Circle />}
